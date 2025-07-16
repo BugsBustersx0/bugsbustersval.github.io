@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+
+ <title>Servicio que valida datos</title>
+
+</head>
+
+<body>
+
+ <h1>Servicio que valida datos de BugsBusters</h1>
+
+ <form onsubmit="procesaForma(event) ">
+
+  <p>
+   <label>
+    Saludo:
+    <!-- Como este input tiene name="saludo", su valor se recupera en el
+     servidor con leeTexto("saludo") -->
+    <input name="saludo">
+   </label>
+  </p>
+
+  <p>
+   <label>
+    Nombre:
+    <!-- Como este input tiene name="nombre", su valor se recupera en el
+     servidor con leeTexto("nombre") -->
+    <input name="nombre">
+   </label>
+  </p>
+
+  <p><button type="submit">Procesa</button></p>
+
+ </form>
+
+ <script type="module">
+
+  import { exportaAHtml } from "./lib/js/exportaAHtml.js"
+  import { muestraError } from "./lib/js/muestraError.js"
+  import { submitForm } from "./lib/js/submitForm.js"
+
+  /**
+   * @param {Event} event
+   */
+  async function procesaForma(event) {
+   try {
+    const respuesta =
+     await submitForm(
+      "srv/valida.php", event)
+    alert(respuesta.body)
+   } catch (error) {
+    muestraError(error)
+   }
+  }
+  exportaAHtml(procesaForma)
+
+ </script>
+
+</body>
+
+</html>
